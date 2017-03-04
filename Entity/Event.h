@@ -1,7 +1,9 @@
 #pragma once
 #include"User.h"
-
-using namespace std;
+#include <vector>
+#include <iostream>
+#include <string>
+#include "Comment.h"
 
 enum Priorities { low, medium, high };
 
@@ -12,15 +14,14 @@ private:
 	string date;
 	string plot;
 	string shortPlot;
-	User *author;
-	vector<Comment> *comments;
+	User author;
+	vector<Comment> comments;
 	int popularity;
-	Priorities priority;
-
-	Event();
 
 public:
-	Event(string t, string p, string shP, int pop, Priorities prior);
+	Event() {};
+
+	Event(string newTitle, string newPassword, string newShortPlot, User newAuthor, vector<Comment> newComments, string newDate);
 	
 	//get
 	string getTitle();
@@ -36,15 +37,25 @@ public:
 	Priorities getPriority();
 
 	// set
-	string setTitle(string t);
+	void setTitle(string t);
 
-	string setPlot(string p);
+	void setPlot(string p);
 
-	string  setShortPlot(string shP);
+	void setShortPlot(string shP);
 
-	string setDate(string d);
+	void setDate(string newDate);
 
-	int setPopularity(int pop);
+	void setPopularity(int newPopularity);
 
-	Priorities setPriority(Priorities prior);
+	void setPriority(Priorities newPriority);
+
+	//operators
+
+	Event& operator=(const Event& newEvent);
+
+	friend istream& operator >> (istream& is, Event& input);
+
+	friend ostream& operator<< (ostream& os, const Event& outputEvent);
+
+	~Event();
 };

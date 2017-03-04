@@ -1,13 +1,17 @@
 #include <string>
-#include"Event.h"
+#include <ctime>
+#include "Event.h"
+#include "Comment.h"
 
-Event::Event(string t, string p, string shP, int pop, Priorities prior)
+Event::Event(string newTitle, string newPlot, string newShortPlot, User newAuthor, vector<Comment> newComments, string newDate):
+	title(newTitle),plot(newPlot),author(newAuthor),date(newDate)
 {
-	title = t;
-	plot = p;
-	shortPlot = shP;
-	popularity = pop;
-	priority = prior;
+	comments.clear();
+	comments = newComments;
+	for (int i = 0; i < newComments.size(); i++)
+	{
+		comments[i] = newComments[i];
+	}
 }
 
 //get
@@ -36,38 +40,81 @@ int Event::getPopularity()
 	return popularity;
 }
 
-Priorities Event::getPriority()
-{
-	return priority;
-}
 
 // set
-string Event::setTitle(string t)
+void Event::setTitle(string newTitle)
 {
-	title = t;
+	title = newTitle;
 }
 
-string Event::setPlot(string p)
+void Event::setPlot(string newPlot)
 {
-	plot = p;
+	plot = newPlot;
 }
 
-string  Event::setShortPlot(string shP)
+void  Event::setShortPlot(string newShortPlot)
 {
-	shortPlot = shP;
+	shortPlot = newShortPlot;
 }
 
-string Event::setDate(string d)
+void Event::setDate(string newDate)
 {
-	date = d;
+	date = newDate;
 }
 
-int Event::setPopularity(int pop)
+void Event::setPopularity(int pop)
 {
 	popularity = pop;
 }
 
-Priorities Event::setPriority(Priorities prior)
+//operators
+
+Event& Event::operator=(const Event& newEvent)
 {
-	priority = prior;
+	title = newEvent.title;
+	date = newEvent.date;
+	plot = newEvent.plot;
+	shortPlot = newEvent.shortPlot;
+	author = newEvent.author;
+	comments = newEvent.comments;
+	popularity = newEvent.popularity;
+	return *this;
 }
+
+ostream& operator<< (ostream& os, const Event& outputEvent)
+{
+	os << outputEvent.title << endl;
+	os << "------------------\n";
+	os << "Author: " << endl;
+	os << outputEvent.plot << endl << endl;
+	os <<"Date: "<< outputEvent.date<<endl;
+	for (int i = 0; i < 120; i++)
+	{
+		os << "_";
+	}
+	os << endl;
+	return os;
+}
+
+istream& operator >> (istream& is, Event& input)
+{
+	cout << "Enter the title\n";
+	getline(cin, input.title);
+	cout << "Enter the plot\n";
+	getline(cin, input.plot);
+	time_t now = time(0);
+	input.setDate(ctime(&now));
+	return is;
+};
+
+Event::~Event()
+{
+	if (comments.empty()==false)
+	{
+		comments.clear();
+	}
+}
+
+
+
+

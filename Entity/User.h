@@ -8,17 +8,19 @@ class User
 private:
 	string userName;
 	string password;
-	vector<Event> *posts;
-	User();
 
 public:
-	User(string userN, string p);
+	User() {};
+
+	User(string newUserName, string newPassword);
 
 	string getUserName();
 
 	string getPassword();
 
-	void setUserName(string userN);
+	void setUserName(string newUserName);
 
-	void setPassword(string passw);
+	void setPassword(string newPassword);
+
+	friend istream& operator >> (istream& is, User& inputUser);
 };

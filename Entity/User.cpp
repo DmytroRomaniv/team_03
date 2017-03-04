@@ -3,10 +3,16 @@
 
 using namespace std;
 
-User::User(string userN, string p)
+
+User::User(string newUserName, string newPassword) : userName(newUserName), password(newPassword) {};
+
+void User::setUserName(string newUserName)
 {
-	userName = userN;
-	password = p;
+	UserName = newUserName;
+}
+void User::setPassword(string newPassword)
+{
+	password = NewPassword;
 }
 
 string User::getUserName()
@@ -17,11 +23,13 @@ string User::getPassword()
 {
 	return password;
 }
-string User::setUserName(string userN)
+
+
+istream& operator >> (istream& is, User& inputUser)
 {
-	userName = userN;
-}
-string User::setPassword(string passw)
-{
-	password = passw;
+	cout << "Login: ";
+	is >> inputUser.userName;
+	cout << "Password: ";
+	is >> inputUser.password;
+	return is;
 }
